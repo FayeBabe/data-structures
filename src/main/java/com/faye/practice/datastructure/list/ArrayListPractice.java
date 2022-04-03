@@ -2,7 +2,9 @@ package com.faye.practice.datastructure.list;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,6 +29,7 @@ public class ArrayListPractice {
         String removedElement = list.remove(0); // Collection.remove(int) removes an element by index and returns its value, instead of whether the removal was successful
         System.out.println("Last removed element: " + removedElement);
 
+        System.out.println("\n##### Remove list element at position that doesn't exist:");
         try {
             String unsuccessfullyRemovedElem = list.remove(0);
         } catch (IndexOutOfBoundsException ex) {
@@ -68,7 +71,6 @@ public class ArrayListPractice {
         list.remove(0); // list: ["string1"]
 
         // (print list contents)
-        System.out.print("list: ");
         printList(list);
 
         // Find the index of the first and last occurrence of an element:
@@ -84,7 +86,8 @@ public class ArrayListPractice {
         list.add("dummy"); // add dummy element. list: ["dummy"]
         String oldElement = list.set(0, "test"); // replace with new element. list: ["test"]. Returns "dummy"
 
-        // You can't "set" the element at an index that doesn't exist yet, yields IndexOutOfBoundsException
+        // You cannot "set" the element at an index that doesn't exist yet, yields IndexOutOfBoundsException
+        System.out.println("\n##### Replace element in list at position that doesn't exist:");
         try {
             list.set(1, "impossible");
         } catch (IndexOutOfBoundsException ex) {
@@ -97,12 +100,13 @@ public class ArrayListPractice {
      */
     private void listInitialization() {
         /*
-         * Arrays.asList takes an Object[] or ...Object as parameter
-         * Beware: the result is not an ArrayList, but a plain List with an internal array of a fixed size!
+         * Arrays.asList takes an Object[] or ...Object as parameter.
+         * Beware: the result is not an ArrayList, but a List with an internal array of a fixed size!
          */
         List<String> list = Arrays.asList("1", "2", "3", "4");
         List<String> list2 = Arrays.asList(new String[]{"1", "2", "3", "4"});
 
+        System.out.println("\n##### Add element to List based on array of fixed size:");
         try {
             list2.add("5");
         } catch (UnsupportedOperationException ex) {
@@ -133,13 +137,45 @@ public class ArrayListPractice {
     private void listIteration() {
         List<String> list = Arrays.asList("1", "2", "3", "4");
 
+        // Use a for-each loop:
+        System.out.println("\n##### Iterate with enhanced for loop:");
+        for(String str : list) {
+            System.out.print(str);
+        }
+
+        // Use a stream
+        System.out.println("\n##### Iterate with stream:");
+        list.stream().forEach(System.out::print);
+
+        // Call forEach directly on the List
+        list.forEach(str -> System.out.print(str));
+
+        // Use an Iterator, which lets you go through the list front to back
+        System.out.println("\n##### Iterate with Iterator:");
+        Iterator<String> iter = list.iterator();
+        while(iter.hasNext()) {
+            System.out.print(iter.next());
+        }
+
+        /*
+         * Use a ListIterator, which lest you go through the list in 2 directions.
+         * You can initialize a ListIterator to point to a specific position with List.listIterator(int),
+         * or have it start at the beginning with List.listIterator(). In either case, you can navigate forward with
+         * next() an backward with previous(), and even remove elements during traversal with remove().
+         */
+        System.out.println("\n##### Iterate with ListIterator:");
+        ListIterator<String> listIter = list.listIterator(list.size()); // initialize ListIterator to point to last element
+        while(listIter.hasPrevious()) {
+            System.out.print(listIter.previous());
+        }
     }
 
     /*
      * There's no convenient way to get the last element of a List l, besides using:
      * l.get(l.size() - 1)
      */
-    private static void printList(final List list) {
+    private static void printList(final List<String> list) {
+        System.out.println("\n##### Print contents of list:");
         System.out.print('[');
         for (int i = 0; i < list.size() - 1; i++) {
             System.out.printf("%s, ", list.get(i));
