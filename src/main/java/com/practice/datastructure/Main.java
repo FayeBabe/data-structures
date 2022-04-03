@@ -1,4 +1,4 @@
-package com.practice.datastructures;
+package com.practice.datastructure;
 
 public class Main {
 
