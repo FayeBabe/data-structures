@@ -1,4 +1,4 @@
-package com.practice.datastructure;
+package com.faye.practice;
 
 public class Main {
 
