@@ -1,5 +1,6 @@
 package com.faye.practice.algorithm.sorting.util;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Comparator;
@@ -31,8 +32,14 @@ public class ComparatorPractice {
         }
     }
 
-    private static class ElementNotImplementingComparable {
+    @RequiredArgsConstructor
+    @Getter
+    public static class ElementNotImplementingComparable {
         private String x;
+
+        public ElementNotImplementingComparable(String x) {
+            this.x = x;
+        }
     }
 
     /*
@@ -42,7 +49,7 @@ public class ComparatorPractice {
      * This one uses the first character of the objects' strings as comparison point. The next one uses the former
      * string length metric.
      */
-    private static class ElementComparatorOnFirstChar implements Comparator<ElementNotImplementingComparable> {
+    public static class ElementComparatorOnFirstChar implements Comparator<ElementNotImplementingComparable> {
         @Override
         public int compare(ElementNotImplementingComparable o1, ElementNotImplementingComparable o2) {
             if (o1.x.charAt(0) < o2.x.charAt(0)) {
